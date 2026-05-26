@@ -584,6 +584,8 @@ model-viewer {
 .slider-navigation-previous,
 .slider-navigation-next {
   z-index: 100 !important;
+  width: 42px !important;
+  height: 42px !important;
 }
 /* FlashVGGT Model Stats */
 .model-stats {
