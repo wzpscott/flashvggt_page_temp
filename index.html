@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="FlashVGGT: Efficient and Scalable Visual Geometry Transformers with Compressed Descriptor Attention.">
+  <meta name="keywords" content="FlashVGGT">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FlashVGGT</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link href="./static/css/sans.css" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/selection-panel.css">
+
+  <link rel="icon" type="image/svg+xml" href="./static/images/blue-lightning.svg">
+
+  <script src="./static/js/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    /* Fancy gradient for FlashVGGT */
+    @keyframes glow-pulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 2px rgba(50, 115, 220, 0.2))
+                drop-shadow(0 0 4px rgba(32, 156, 238, 0.15));
+      }
+      50% {
+        filter: drop-shadow(0 0 3px rgba(50, 115, 220, 0.25))
+                drop-shadow(0 0 6px rgba(32, 156, 238, 0.2));
+      }
+    }
+
+    .fancy-title {
+      display: inline-block;
+      background: linear-gradient(90deg, #3273dc, #209cee);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      animation: glow-pulse 3s ease-in-out infinite;
+      font-weight: 700;
+      font-size: 1.25em;
+      letter-spacing: 0.08em;
+      position: relative;
+      transform: perspective(100px) translateZ(0);
+      transition: transform 0.3s ease;
+    }
+
+    .fancy-title:hover {
+      transform: perspective(100px) translateZ(5px) scale(1.02);
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-3 publication-title">
+              <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <img src="./static/images/blue-lightning.svg" alt="FlashVGGT Logo" style="width: 1.5em; height: 1.5em;">
+                <div class="fancy-title" style="display: block;">FlashVGGT</div>
+              </div>
+              <div style="display: block; color:#4a4a4a; margin-top: 10px;">Efficient and Scalable Visual Geometry Transformers with Compressed Descriptor Attention</div>
+            </h1>
+
+            <div class="is-size-5 publication-authors">
+              <a href="https://wzpscott.github.io/" target="_blank">Zipeng Wang</a>,
+              <a href="https://www.danxurgb.net/" target="_blank">Dan Xu</a>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">The Hong Kong University of Science and Technology (HKUST)</span>
+            </div>
+
+            <div class="is-size-4 has-text-weight-bold" style="margin-top: 0.5rem; color: #363636;">
+              CVPR 2026
+            </div>
+
+            <div class="publication-links" style="margin-top: 1rem;">
+              <!-- PDF link -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2512.01540" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <!-- ArXiv abstract Link -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2512.01540" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <!-- Github link -->
+              <span class="link-block">
+                <a href="https://github.com/wzpscott/flashvggt" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+
+              <!-- HuggingFace link -->
+              <span class="link-block">
+                <a href="https://huggingface.co/papers/2512.01540" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    🤗
+                  </span>
+                  <span>HuggingFace</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="tldr" style="padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div class="box has-background-info-light tldr-highlight" style="border-left: 4px solid #3273dc; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <span class="tag is-info is-medium has-text-weight-semibold" style="margin-right: 0.75rem;">
+              TL;DR
+            </span>
+            <b>Accelerate VGGT with more efficient global attention for ~10x faster inference on 1K images and scaling to 3K+ images.</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div id="demo-carousel" class="carousel">
+            <div class="item item-1">
+              <video poster="" controls muted loop playsinline height="100%">
+                <source src="./static/videos/long_corridor.mov" type="video/mp4">
+              </video>
+              <p class="has-text-centered">VGGTLong-Corridor (2499 images)</p>
+            </div>
+            <div class="item item-2">
+              <video poster="" controls muted loop playsinline height="100%">
+                <source src="./static/videos/rubble_pixsfm.mov" type="video/mp4">
+              </video>
+              <p class="has-text-centered">Mill19-Rubble (1677 images)</p>
+            </div>
+            <div class="item item-3">
+              <video poster="" controls muted loop playsinline height="100%">
+                <source src="./static/videos/vkitti.mov" type="video/mp4">
+              </video>
+              <p class="has-text-centered">VKitti-Scene01 (446 images)</p>
+            </div>
+            <div class="item item-4">
+              <video poster="" controls muted loop playsinline height="100%">
+                <source src="./static/videos/pumpkin.mov" type="video/mp4">
+              </video>
+              <p class="has-text-centered">7Scenes-Pumpkin (1000 images)</p>
+            </div>
+            <div class="item item-5">
+              <video poster="" controls muted loop playsinline height="100%">
+                <source src="./static/videos/scannet.mov" type="video/mp4">
+              </video>
+              <p class="has-text-centered">ScanNet-Scene0002 (5192 images)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div class="box" style="box-shadow: 0 18px 45px rgba(10,10,10,0.06); border: 1px solid #e0e0e0;">
+            <div class="content" style="max-width: 860px; margin: 0 auto;">
+              <h2 class="title is-3 has-text-centered">Abstract</h2>
+              <div class="content has-text-justified">
+                <p>
+                  3D reconstruction from multi-view images is a core challenge in computer vision. Recently, feed-forward methods have emerged as efficient and robust alternatives to traditional per-scene optimization techniques. Among them, state-of-the-art models like the Visual Geometry Grounding Transformer (VGGT) leverage full self-attention over all image tokens to capture global relationships. However, this approach suffers from poor scalability due to the quadratic complexity of self-attention and the large number of tokens generated in long image sequences.
+                  In this work, we introduce FlashVGGT, an efficient alternative that addresses this bottleneck through a descriptor-based attention mechanism. Instead of applying dense global attention across all tokens, FlashVGGT compresses spatial information from each frame into a compact set of <b>descriptor tokens</b>. 
+                  Global attention is then computed as cross-attention between the full set of image tokens and this smaller descriptor set, significantly reducing computational overhead.
+                  Moreover, the compactness of the descriptors enables online inference over long sequences via a chunk-recursive mechanism that reuses cached descriptors from previous chunks. Experimental results show that FlashVGGT achieves reconstruction accuracy competitive with VGGT while reducing inference time to just 9.3% of VGGT for 1,000 images, and scaling efficiently to sequences exceeding 3,000 images.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="box method-overview-box" style="box-shadow: 0 20px 50px rgba(10,10,10,0.08); border: 1px solid #e0e0e0; padding-bottom: 2rem;">
+        <div class="is-centered has-text-centered" style="padding-bottom: 2rem;">
+          <h2 class="title is-3">Method</h2>
+          <p class="subtitle is-5 has-text-grey">FlashVGGT swaps dense global attention with more efficient descriptor attention.</p>
+        </div>
+        <figure class="image" style="margin-bottom: 2rem;">
+          <img src="static/images/framework.png" alt="FlashVGGT framework diagram" style="border-radius: 12px; width: 100%; height: auto;">
+        </figure>
+        <div class="content">
+          <div class="columns is-multiline is-variable is-4">
+            <div class="column is-one-third-desktop is-full-mobile">
+              <div class="box has-background-info-light" style="border-left: 4px solid #3273dc; height: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <div style="margin-bottom: 0.5rem;">
+                  <span class="tag is-info is-medium has-text-weight-semibold">
+                    <span class="icon is-small mr-1"><i class="fas fa-compress-arrows-alt"></i></span>
+                    Descriptor Tokens
+                  </span>
+                </div>
+                <p class="has-text-grey-dark">Efficiently compress dense image tokens into a compact set of spatial descriptors via learned resampling.</p>
+              </div>
+            </div>
+            <div class="column is-one-third-desktop is-full-mobile">
+              <div class="box has-background-info-light" style="border-left: 4px solid #3273dc; height: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <div style="margin-bottom: 0.5rem;">
+                  <span class="tag is-info is-medium has-text-weight-semibold">
+                    <span class="icon is-small mr-1"><i class="fas fa-project-diagram"></i></span>
+                    Cross-Attention
+                  </span>
+                </div>
+                <p class="has-text-grey-dark">Replace quadratic self-attention with linear cross-attention between image queries and descriptor keys/values.</p>
+              </div>
+            </div>
+            <div class="column is-one-third-desktop is-full-mobile">
+              <div class="box has-background-info-light" style="border-left: 4px solid #3273dc; height: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <div style="margin-bottom: 0.5rem;">
+                  <span class="tag is-info is-medium has-text-weight-semibold">
+                    <span class="icon is-small mr-1"><i class="fas fa-history"></i></span>
+                    Chunk Inference
+                  </span>
+                </div>
+                <p class="has-text-grey-dark">Cache and reuse descriptors across temporal chunks to scale seamlessly to sequences of thousands of frames.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Single-Forward Reconstruction. -->
+  <section class="section">
+    <div class="container is-max-desktop" id="comparison_container">
+      <div class="box" style="box-shadow: 0 20px 50px rgba(10,10,10,0.08); border: 1px solid #e0e0e0; padding: 2rem;">
+        <div class="is-centered has-text-centered" style="margin-bottom: 20px;">
+          <h2 class="title is-3">Single-forward Reconstruction</h2>
+          <p class="subtitle is-5 has-text-grey">
+            Select a scene from the panel below to compare the results.
+          </p>
+        </div>
+  
+        <div class="model-container" id="model-compare-wrapper">
+          <!-- Model 1 Viewer with Label -->
+          <div class="model-wrapper-comparison">
+            <div class="model-label">FlashVGGT (Ours)</div>
+            <div id="stats-ours" class="model-stats"></div>
+            <model-viewer id="modelViewerComparison1" class="model-viewer-texture" loading="eager"
+              poster="static/images/loading.gif" touch-action="pan-y" environment-image="legacy" zoom-sensitivity="0.2"
+              camera-controls disable-tap camera-orbit="0deg 75deg 1.5m" camera-target="0m 0m 0m" interaction-prompt="none"
+              shadow-intensity="0" ar style="width: 100%; height: 100%;">
+            </model-viewer>
+          </div>
+          <!-- Model 2 Viewer with Label -->
+          <div class="model-wrapper-comparison">
+            <div class="tips-wrapper">
+              <div class="tips-icon">💡Tips</div>
+              <div class="tips-text">
+                <p>● Scroll to zoom in/out</p>
+                <p>● Drag to rotate</p>
+                <p>● Press "shift" and drag to pan</p>
+              </div>
+            </div>
+            <select id="comparisonBaselineSelection" class="dropdown model-label">
+              <option value="VGGT">VGGT</option>
+              <option value="FastVGGT">FastVGGT</option>
+            </select>
+            <div id="stats-baseline" class="model-stats"></div>
+            <model-viewer id="modelViewerComparison2" class="model-viewer-texture" loading="eager"
+              poster="static/images/loading.gif" touch-action="pan-y" environment-image="legacy" zoom-sensitivity="0.2"
+              camera-controls disable-tap camera-orbit="0deg 75deg 1.5m" camera-target="0m 0m 0m" interaction-prompt="none"
+              shadow-intensity="0" ar style="width: 100%; height: 100%;">
+            </model-viewer>
+          </div>
+        </div>
+        <div style="padding-top: 1rem;">
+          <div class="selection-panel" id="comparisonSelectionPanel" style="width: 98% !important; height: 120px; margin-left: 1%;">
+            <img class="selectable-image selected" name="colosseum">
+            <img class="selectable-image" name="pyramid">
+            <img class="selectable-image" name="garden">
+            <img class="selectable-image" name="residence">
+            <img class="selectable-image" name="person-tracking">
+            <img class="selectable-image" name="pumpkin">
+            <img class="selectable-image" name="full_dataset_scene0046_02">
+            <img class="selectable-image" name="breakfast_room">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--/ Single-Forward Reconstruction. -->
+
+  <!-- Chunk-Recursive Reconstruction. -->
+  <section class="section">
+    <div class="container is-max-desktop" id="comparison_chunk_container">
+      <div class="box" style="box-shadow: 0 20px 50px rgba(10,10,10,0.08); border: 1px solid #e0e0e0; padding: 2rem;">
+        <div class="is-centered has-text-centered" style="margin-bottom: 20px;">
+          <h2 class="title is-3">Chunk-recursive Reconstruction</h2>
+          <p class="subtitle is-5 has-text-grey">
+            Select a scene from the panel below to compare the results.
+          </p>
+        </div>
+  
+        <div class="model-container" id="model-compare-wrapper-chunk">
+          <!-- Model 1 Viewer with Label -->
+          <div class="model-wrapper-comparison">
+            <div class="model-label">FlashVGGT (Ours)</div>
+            <div id="stats-ours-chunk" class="model-stats"></div>
+            <model-viewer id="modelViewerComparisonChunk1" class="model-viewer-texture" loading="eager"
+              poster="static/images/loading.gif" touch-action="pan-y" environment-image="legacy" zoom-sensitivity="0.2"
+              camera-controls disable-tap camera-orbit="0deg 75deg 1.5m" camera-target="0m 0m 0m" interaction-prompt="none"
+              shadow-intensity="0" ar style="width: 100%; height: 100%;">
+            </model-viewer>
+          </div>
+          <!-- Model 2 Viewer with Label -->
+          <div class="model-wrapper-comparison">
+            <div class="tips-wrapper">
+              <div class="tips-icon">💡Tips</div>
+              <div class="tips-text">
+                <p>● Scroll to zoom in/out</p>
+                <p>● Drag to rotate</p>
+                <p>● Press "shift" and drag to pan</p>
+              </div>
+            </div>
+            <select id="comparisonBaselineSelectionChunk" class="dropdown model-label">
+              <option value="cut3r">cut3r</option>
+              <option value="ttt3r">ttt3r</option>
+            </select>
+            <div id="stats-baseline-chunk" class="model-stats"></div>
+            <model-viewer id="modelViewerComparisonChunk2" class="model-viewer-texture" loading="eager"
+              poster="static/images/loading.gif" touch-action="pan-y" environment-image="legacy" zoom-sensitivity="0.2"
+              camera-controls disable-tap camera-orbit="0deg 75deg 1.5m" camera-target="0m 0m 0m" interaction-prompt="none"
+              shadow-intensity="0" ar style="width: 100%; height: 100%;">
+            </model-viewer>
+          </div>
+        </div>
+        <div style="padding-top: 1rem;">
+          <div class="selection-panel" id="comparisonSelectionPanelChunk" style="width: 98% !important; height: 120px; margin-left: 1%;">
+            <img class="selectable-image selected" name="kitchen">
+            <img class="selectable-image" name="morning_apartment">
+            <img class="selectable-image" name="playroom">
+            <img class="selectable-image" name="rgbd_dataset_freiburg3_sitting_halfsphere">
+            <img class="selectable-image" name="truck">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--/ Chunk-Recursive Reconstruction. -->
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@inproceedings{wang2026flashvggt,
+  title={FlashVGGT: Efficient and Scalable Visual Geometry Transformers with Compressed Descriptor Attention},
+  author={Wang, Zipeng and Xu, Dan},
+  journal={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2026}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content" style="text-align: center;">
+            <p>
+              The page template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+              The interactive point cloud visualization is borrowed from <a href="https://wangrc.site/MoGePage/">MoGe</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script type="module" src="static/js/model-viewer.min.js"></script>
+  <script src="static/js/comparison.js"></script>
+</body>
+
+</html>
