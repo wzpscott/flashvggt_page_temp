@@ -52,7 +52,6 @@ videoSelectionPanel.addEventListener('click', function(event) {
 
     mainVideoSource.src = `./static/videos/${scene}/video.mov`;
     mainVideo.load();
-    mainVideo.play();
     
     videoTitle.innerText = data.title;
 });
