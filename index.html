@@ -140,7 +140,7 @@
     </div>
   </section>
 
-  <section class="section" id="tldr" style="padding-bottom: 0;">
+  <!-- <section class="section" id="tldr" style="padding-bottom: 0;">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-four-fifths">
@@ -148,12 +148,12 @@
             <span class="tag is-info is-medium has-text-weight-semibold" style="margin-right: 0.75rem;">
               TL;DR
             </span>
-            <b>Accelerate VGGT with more efficient global attention for ~10x faster inference on 1K images and scaling to 3K+ images.</b>
+            <b>Accelerate VGGT with efficient global attention for ~10x faster inference on 1K images and scaling to 3K+ images.</b>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <section class="section" style="padding-bottom: 0;">
     <div class="container is-max-desktop">
@@ -206,6 +206,9 @@
             <div class="content" style="max-width: 860px; margin: 0 auto;">
               <h2 class="title is-3 has-text-centered">Abstract</h2>
               <div class="content has-text-justified">
+                <div class="has-background-info-light has-text-centered" style="padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 1.1em; border: 1px solid #cce5ff;">
+                  <b>TL;DR:</b> Accelerate VGGT by spatially resampling keys and values for global attention.
+                </div>
                 <p>
                   3D reconstruction from multi-view images is a core challenge in computer vision. Recently, feed-forward methods have emerged as efficient and robust alternatives to traditional per-scene optimization techniques. Among them, state-of-the-art models like the Visual Geometry Grounding Transformer (VGGT) leverage full self-attention over all image tokens to capture global relationships. However, this approach suffers from poor scalability due to the quadratic complexity of self-attention and the large number of tokens generated in long image sequences.
                   In this work, we introduce FlashVGGT, an efficient alternative that addresses this bottleneck through a descriptor-based attention mechanism. Instead of applying dense global attention across all tokens, FlashVGGT compresses spatial information from each frame into a compact set of <b>descriptor tokens</b>. 
