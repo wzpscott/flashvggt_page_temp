@@ -64,7 +64,7 @@
 
   <section class="hero">
     <div class="hero-body">
-      <div class="container is-max-desktop">
+      <div class="container is-max-widescreen">
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-3 publication-title">
@@ -141,7 +141,7 @@
   </section>
 
   <!-- <section class="section" id="tldr" style="padding-bottom: 0;">
-    <div class="container is-max-desktop">
+    <div class="container is-max-widescreen">
       <div class="columns is-centered">
         <div class="column is-four-fifths">
           <div class="box has-background-info-light tldr-highlight" style="border-left: 4px solid #3273dc; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
@@ -156,40 +156,24 @@
   </section> -->
 
   <section class="section" style="padding-bottom: 0;">
-    <div class="container is-max-desktop">
+    <div class="container is-max-widescreen">
       <div class="columns is-centered">
         <!-- <div class="column is-four-fifths"> -->
           <div class="column is-full">
-          <div id="demo-carousel" class="carousel">
-            <div class="item item-1">
-              <video poster="" controls muted loop playsinline height="100%">
-                <source src="./static/videos/long_corridor.mov" type="video/mp4">
-              </video>
-              <p class="has-text-centered">VGGTLong-Corridor (2499 images)</p>
-            </div>
-            <div class="item item-2">
-              <video poster="" controls muted loop playsinline height="100%">
-                <source src="./static/videos/rubble_pixsfm.mov" type="video/mp4">
-              </video>
-              <p class="has-text-centered">Mill19-Rubble (1677 images)</p>
-            </div>
-            <div class="item item-3">
-              <video poster="" controls muted loop playsinline height="100%">
-                <source src="./static/videos/vkitti.mov" type="video/mp4">
-              </video>
-              <p class="has-text-centered">VKitti-Scene01 (446 images)</p>
-            </div>
-            <div class="item item-4">
-              <video poster="" controls muted loop playsinline height="100%">
-                <source src="./static/videos/pumpkin.mov" type="video/mp4">
-              </video>
-              <p class="has-text-centered">7Scenes-Pumpkin (1000 images)</p>
-            </div>
-            <div class="item item-5">
-              <video poster="" controls muted loop playsinline height="100%">
-                <source src="./static/videos/scannet.mov" type="video/mp4">
-              </video>
-              <p class="has-text-centered">ScanNet-Scene0002 (5192 images)</p>
+          <div class="video-wrapper">
+            <video id="main-video" poster="" controls muted loop playsinline height="100%" style="width: 100%;">
+              <source id="main-video-source" src="./static/videos/long_corridor/video.mov" type="video/mp4">
+            </video>
+            <p id="video-title" class="has-text-centered" style="margin-top: 10px; font-size: 1.2rem;">VGGTLong-Corridor (2499 images)</p>
+          </div>
+          
+          <div style="padding-top: 1rem;">
+            <div class="selection-panel" id="videoSelectionPanel" style="width: 98% !important; height: 120px; margin-left: 1%;">
+              <img class="selectable-image selected" name="long_corridor">
+              <img class="selectable-image" name="rubble">
+              <img class="selectable-image" name="vkitti">
+              <img class="selectable-image" name="pumpkin">
+              <img class="selectable-image" name="scannet">
             </div>
           </div>
         </div>
@@ -198,12 +182,12 @@
   </section>
 
   <section class="section" id="abstract">
-    <div class="container is-max-desktop">
+    <div class="container is-max-widescreen">
       <div class="columns is-centered">
         <!-- <div class="column is-four-fifths"> -->
           <div class="column is-full">
           <div class="box" style="box-shadow: 0 18px 45px rgba(10,10,10,0.06); border: 1px solid #e0e0e0;">
-            <div class="content" style="max-width: 860px; margin: 0 auto;">
+            <div class="content" style="max-width: 1000px; margin: 0 auto;">
               <h2 class="title is-3 has-text-centered">Abstract</h2>
               <div class="content has-text-justified">
                 <div class="has-background-info-light has-text-centered" style="padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 1.1em; border: 1px solid #cce5ff;">
@@ -213,7 +197,7 @@
                   3D reconstruction from multi-view images is a core challenge in computer vision. Recently, feed-forward methods have emerged as efficient and robust alternatives to traditional per-scene optimization techniques. Among them, state-of-the-art models like the Visual Geometry Grounding Transformer (VGGT) leverage full self-attention over all image tokens to capture global relationships. However, this approach suffers from poor scalability due to the quadratic complexity of self-attention and the large number of tokens generated in long image sequences.
                   In this work, we introduce FlashVGGT, an efficient alternative that addresses this bottleneck through a descriptor-based attention mechanism. Instead of applying dense global attention across all tokens, FlashVGGT compresses spatial information from each frame into a compact set of <b>descriptor tokens</b>. 
                   Global attention is then computed as cross-attention between the full set of image tokens and this smaller descriptor set, significantly reducing computational overhead.
-                  Moreover, the compactness of the descriptors enables online inference over long sequences via a chunk-recursive mechanism that reuses cached descriptors from previous chunks. Experimental results show that FlashVGGT achieves reconstruction accuracy competitive with VGGT while reducing inference time to just 9.3% of VGGT for 1,000 images, and scaling efficiently to sequences exceeding 3,000 images.
+                  Moreover, the compactness of the descriptors enables online inference over long sequences via a chunk-recursive mechanism that reuses cached descriptors from previous chunks. Experimental results show that FlashVGGT achieves reconstruction accuracy competitive with VGGT while reducing inference time to just 9.3% of VGGT for 1,000 images, and scaling to sequences exceeding 3,000 images.
                 </p>
               </div>
             </div>
@@ -224,11 +208,11 @@
   </section>
 
   <section class="section">
-    <div class="container is-max-desktop">
+    <div class="container is-max-widescreen">
       <div class="box method-overview-box" style="box-shadow: 0 20px 50px rgba(10,10,10,0.08); border: 1px solid #e0e0e0; padding-bottom: 2rem;">
         <div class="is-centered has-text-centered" style="padding-bottom: 2rem;">
           <h2 class="title is-3">Method</h2>
-          <p class="subtitle is-5 has-text-grey">FlashVGGT swaps dense global attention with more efficient descriptor attention.</p>
+          <!-- <p class="subtitle is-5 has-text-grey">FlashVGGT swaps dense global attention with more efficient descriptor attention.</p> -->
         </div>
         <figure class="image" style="margin-bottom: 2rem;">
           <img src="static/images/framework.png" alt="FlashVGGT framework diagram" style="border-radius: 12px; width: 100%; height: auto;">
@@ -243,7 +227,7 @@
                     Descriptor Tokens
                   </span>
                 </div>
-                <p class="has-text-grey-dark">Efficiently compress dense image tokens into a compact set of spatial descriptors via learned resampling.</p>
+                <p class="has-text-grey-dark">Efficiently compress dense image tokens into a compact set of spatial descriptors via resampling.</p>
               </div>
             </div>
             <div class="column is-one-third-desktop is-full-mobile">
@@ -276,7 +260,7 @@
 
   <!-- Single-Forward Reconstruction. -->
   <section class="section">
-    <div class="container is-max-desktop" id="comparison_container">
+    <div class="container is-max-widescreen" id="comparison_container">
       <div class="box" style="box-shadow: 0 20px 50px rgba(10,10,10,0.08); border: 1px solid #e0e0e0; padding: 2rem;">
         <div class="is-centered has-text-centered" style="margin-bottom: 20px;">
           <h2 class="title is-3">Single-forward Reconstruction</h2>
@@ -337,7 +321,7 @@
 
   <!-- Chunk-Recursive Reconstruction. -->
   <section class="section">
-    <div class="container is-max-desktop" id="comparison_chunk_container">
+    <div class="container is-max-widescreen" id="comparison_chunk_container">
       <div class="box" style="box-shadow: 0 20px 50px rgba(10,10,10,0.08); border: 1px solid #e0e0e0; padding: 2rem;">
         <div class="is-centered has-text-centered" style="margin-bottom: 20px;">
           <h2 class="title is-3">Chunk-recursive Reconstruction</h2>
@@ -394,7 +378,7 @@
   <!--/ Chunk-Recursive Reconstruction. -->
 
   <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
+    <div class="container is-max-widescreen content">
       <h2 class="title">BibTeX</h2>
       <pre><code>@inproceedings{wang2026flashvggt,
   title={FlashVGGT: Efficient and Scalable Visual Geometry Transformers with Compressed Descriptor Attention},
@@ -421,6 +405,7 @@
   </footer>
   <script type="module" src="static/js/model-viewer.min.js"></script>
   <script src="static/js/comparison.js"></script>
+  <script src="static/js/video_selection.js"></script>
 </body>
 
 </html>
